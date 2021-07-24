@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color: #262626; color: white; font-family: monospace; font-size: 13px">
+<pre>
+Report created: {{ date }} {{ weekday }}
+
+|--------------------------------------------------------------|
+| Hello!                                                       |
+| I'm config_differ, I will send you configuration diffs from  |
+| network devices everyday.                                    |
+| To watch that via web, use:                                  |
+| My source code: https://github.com/Savamoti/config_differ    |
+|--------------------------------------------------------------|
+(\__/) ||
+(•ㅅ•) ||
+/ 　 づ
+</pre>
+
+
+{% if devices %}
+    <h3> Devices: </h3>
+    <ul>
+        {% for device in devices|sort(attribute='hostname') %}
+        <li><a href="#{{ device.hostname }}" name="toc_{{ device.hostname }}" style="color: white; text-decoration: none" title="Go to device configuration"> {{ device.hostname }} ▼ </a></li>
+        {% endfor %}
+    </ul>
+
+    {% for device in devices|sort(attribute='hostname') %}
+
+    <form>
+      <fieldset>
+        <legend> <a href="#toc_{{ device.hostname }}" name="{{ device.hostname }}" style="color: white; text-decoration: none" title="Go to device list"> {{ device.hostname }} ▲ </a> </legend>
+        <pre>
+        {% for line in device.config %}
+            {% if line.startswith('-') %}
+<span style="color: #AF0000">{{ line }}</span>
+            {% elif line.startswith('+') %}
+<span style="color: #5F8700">{{ line }}</span>
+            {% else %}
+<span>{{ line }}</span>
+            {% endif %}
+        {% endfor %}
+        </pre>
+      </fieldset>
+    </form>
+    <br>
+
+    {% endfor %}
+{% else %}
+<br>
+<br>
+<br>
+<pre>
+|-----------------------------|
+| No changes found for today. |
+| Go home.                    |
+|-----------------------------|
+             /
+            /
+¯\_(ツ)_/¯
+</pre>
+{% endif %}
+</body>
+</html>

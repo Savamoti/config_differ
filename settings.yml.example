@@ -1,0 +1,36 @@
+# Paths.
+BACKUP_DIR: '/opt/cbackup/data/backup'
+RESULTS_DIR: 'results'
+# Get diff between current and previous config file.
+COMMAND_GIT_DIFF: 'git --no-pager diff HEAD^ HEAD -U10 {file}'
+
+# Regular expression for hostname.
+HOSTNAME_PREFIXES:
+ - 'ost-name (\S+)'
+ - 'hostname (\S+)'
+ - 'sysname (\S+)'
+ - 'config command_prompt (\S+)'
+ - 'set name=(\S+)'
+
+ # Regular expression for lines, that should be deleted.
+TRASH_LINES:
+  - '^[-+]?\s*$' # empty line
+  - '^[-+]!Time: .*'
+  - '^[-+]! NVRAM config last updated at .*'
+  - '^[-+]ntp clock-period'
+  - '^[-+]!?Current configuration : .*'
+  - '^[-+]!Running configuration last done at.*'
+  - '^[-+]!+\s?Last configuration .* at'
+  - '^[-+]## Last commit: .* by '
+  - '^[-+]Building configuration...'
+  - '^[-+]Using \d+ out of \d+ bytes'
+  - '^[-+]# \S+/\d+/\d+ \d+:\d+:\d+ by RouterOS .*' # -# may/14/2021 06:31:36 by RouterOS 6.46.1
+  - '^[-+]\S{3}\s+\S{3}\s+\d+\s+\d\d:\d\d:\d\d\.\d\d\d\s+\S+$' # -Fri May 14 05:31:14.957 KRAT
+
+  # E-Mail creds.
+SMTP_SENDER: ''
+SMTP_PASSWORD: ''
+SMTP_SERVER: ''
+SMTP_PORT: 
+EMAIL_RECIEVERS:
+  - example@example.com
